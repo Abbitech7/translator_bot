@@ -7,14 +7,12 @@ from telegram.ext import (
     CallbackContext,
     ChatMemberHandler,
 )
-
-from deep_translator import GoogleTranslator,single_detection
+from deep_translator import GoogleTranslator, single_detection
 import logging
 
-
-
 logging.basicConfig(
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
+    format="%(asctime)s - %(name)s - %(levellevel)s - %(message)s",
+    level=logging.INFO,
 )
 logger = logging.getLogger(__name__)
 
@@ -36,7 +34,10 @@ async def handle_chat_member_update(update: Update, context: CallbackContext):
 
 async def translate(update: Update, context: CallbackContext):
     text = update.message.text
-    
+
+    if not text:
+        return  
+
     try:
         lang = single_detection(text, api_key='f52e9f14002ed9aed98b85842e196132')
         if lang == 'am':
@@ -53,15 +54,16 @@ async def translate(update: Update, context: CallbackContext):
             translated_text = f"{text}\n\nAmharic\n\n {translated_text_am}\n\nAfan Oromo\n\n {translated_text_om}"
         else:
             translated_text = "Unsupported language!"
+        
         await update.message.delete()
-        await context.bot.send_message(chat_id=update.message.chat_id, text=translated_text)
-    except Exception as e:
-        await context.bot.send_message(chat_id=update.message.chat_id, text=f"An error occurred: {e}")
 
+        await context.bot.send_message(chat_id=update.effective_chat.id, text=translated_text)
+    except Exception as e:
+        await context.bot.send_message(chat_id=update.effective_chat.id, text=f"An error occurred: {e}")
 
 def main():
     TOKEN = "7831252672:AAHJ_JhJDajCVsO506jSSwleOo9NqTG4LRU"
-    
+
     application = Application.builder().token(TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
