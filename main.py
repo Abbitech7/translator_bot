@@ -42,18 +42,18 @@ async def translate(update: Update, context: CallbackContext):
         if lang == 'am':
             translated_text_en = GoogleTranslator(source='am', target='en').translate(text)
             translated_text_om = GoogleTranslator(source='am', target='om').translate(text)
-            translated_text = f"Afan Oromo\n\n {translated_text_om}\n\nEnglish\n\n {translated_text_en}"
+            translated_text = f"{text}\n\nAfan Oromo\n\n {translated_text_om}\n\nEnglish\n\n {translated_text_en}"
         elif lang == 'om':
             translated_text_am = GoogleTranslator(source='om', target='am').translate(text)
             translated_text_en = GoogleTranslator(source='om', target='en').translate(text)
-            translated_text = f"Amharic\n\n {translated_text_am}\n\nEnglish\n\n {translated_text_en}"
+            translated_text = f"{text}\n\nAmharic\n\n {translated_text_am}\n\nEnglish\n\n {translated_text_en}"
         elif lang == 'en':
             translated_text_am = GoogleTranslator(source='en', target='am').translate(text)
             translated_text_om = GoogleTranslator(source='en', target='om').translate(text)
-            translated_text = f"Amharic\n\n {translated_text_am}\n\nAfan Oromo\n\n {translated_text_om}"
+            translated_text = f"{text}\n\nAmharic\n\n {translated_text_am}\n\nAfan Oromo\n\n {translated_text_om}"
         else:
             translated_text = "Unsupported language!"
-        
+        await update.message.delete()
         await context.bot.send_message(chat_id=update.message.chat_id, text=translated_text)
     except Exception as e:
         await context.bot.send_message(chat_id=update.message.chat_id, text=f"An error occurred: {e}")
