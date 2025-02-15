@@ -89,7 +89,15 @@ def main():
     application.add_handler(MessageHandler(filters.ALL, translate))  # This ensures it works in channels too
 
     logger.info("Bot is running...")
-    application.run_polling()
+    
+    WEBHOOK_URL = "https://abitech7.com/webhook"
+
+    application.run_webhook(
+        listen="0.0.0.0",
+        port=int(os.getenv("PORT", 8443)),
+        webhook_url=f"{WEBHOOK_URL}/{TOKEN}"
+)
+
 
 if __name__ == "__main__":
     main()
