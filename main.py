@@ -89,12 +89,8 @@ def main():
     application.add_handler(MessageHandler(filters.ALL, translate)) 
 
     logger.info("Bot is running...")
-    
-    WEBHOOK_URL = "https://abitech7.com"
 
     application.run_polling()
-
-
 
 
 if __name__ == "__main__":
