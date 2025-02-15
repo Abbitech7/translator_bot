@@ -92,11 +92,7 @@ def main():
     
     WEBHOOK_URL = "https://abitech7.com"
 
-    application.run_webhook(
-        listen="0.0.0.0",
-        port=int(os.getenv("PORT", 8443)),
-        webhook_url=f"{WEBHOOK_URL}/{TOKEN}"
-    )
+    application.run_polling()
 
 
 
