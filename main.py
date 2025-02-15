@@ -86,11 +86,11 @@ def main():
     application.add_handler(ChatMemberHandler(handle_chat_member_update, ChatMemberHandler.MY_CHAT_MEMBER))
     
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, translate))
-    application.add_handler(MessageHandler(filters.ALL, translate))  # This ensures it works in channels too
+    application.add_handler(MessageHandler(filters.ALL, translate)) 
 
     logger.info("Bot is running...")
     
-    WEBHOOK_URL = "https://abitech7/webhook"
+    WEBHOOK_URL = "https://abitech7.com"
 
     application.run_webhook(
         listen="0.0.0.0",
